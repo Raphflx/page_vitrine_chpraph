@@ -177,7 +177,7 @@ h1, h2, h3, h4 {
 [data-theme="dark"]  .theme-icon--sun  { display: flex; }
 
 /* =========================================
-   INTRO PROJETS (remplace le hero)
+   INTRO PROJETS
    ========================================= */
 .projects-intro {
   display: flex;
@@ -190,25 +190,6 @@ h1, h2, h3, h4 {
 
 .projects-intro-left { flex: 1; }
 
-.hero-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  padding-bottom: 0.35rem;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--amber);
-  flex-shrink: 0;
-  animation: pulse-dot 2.4s ease-in-out infinite;
-}
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
@@ -286,7 +267,7 @@ h1, h2, h3, h4 {
 .section-label {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 1rem; 
   letter-spacing: 0.12em;
   color: var(--amber);
   margin-bottom: 0.6rem;

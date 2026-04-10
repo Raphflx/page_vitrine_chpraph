@@ -34,10 +34,6 @@
   <header class="site-header">
     <nav class="nav" aria-label="Navigation principale">
 
-      <a href="#projets" class="nav-logo" aria-label="Retour en haut">
-        <span class="logo-bracket">[</span>chp.raph<span class="logo-bracket">]</span>
-      </a>
-
       <ul class="nav-links" role="list">
         <li><a href="#projets">Projets</a></li>
         <li><a href="#competences">Compétences</a></li>
@@ -87,13 +83,81 @@
       <div class="container">
         <header class="projects-intro reveal">
           <div class="projects-intro-left">
-            <span class="section-label">// chp.raph — Réseaux &amp; Télécoms</span>
+            <span class="section-label">// Chappe Raphaël — Étudiant Réseaux &amp; Télécommunications</span>
             <h1 id="projets-title" class="section-title">Projets</h1>
           </div>
         </header>
 
         <div class="projects-grid" id="projectsGrid" aria-label="Liste des projets">
-          <!-- Injecté par projects/loader.js -->
+
+          <a class="project-card" href="https://patatuuu.itch.io/pixel-jump" target="_blank" rel="noopener noreferrer" aria-label="Voir Socket Jump">
+            <figure class="project-card-image">
+              <img src="assets/img/Socket_Jump.png" alt="Socket Jump" loading="lazy" width="400" height="225">
+            </figure>
+            <div class="project-card-body">
+              <h3 class="project-card-title">Socket Jump</h3>
+              <p class="project-card-description">Jeux fait sur Godot engine dans le cadre d'un projet universitaire</p>
+              <ul class="project-tags" role="list">
+                <li class="tag">Jeux</li>
+                <li class="tag">GDscript</li>
+              </ul>
+            </div>
+          </a>
+
+          <article class="project-card">
+            <figure class="project-card-image">
+              <img src="assets/img/F1_Tracker.png" alt="F1 Tracker" loading="lazy" width="400" height="225">
+            </figure>
+            <div class="project-card-body">
+              <h3 class="project-card-title">F1 Tracker</h3>
+              <p class="project-card-description">Suivie en temps réel des courses de F1 incluant toutes les données pertinentes</p>
+              <ul class="project-tags" role="list">
+                <li class="tag">Python</li>
+                <li class="tag">PHP</li>
+                <li class="tag">CSS</li>
+                <li class="tag">JS</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <figure class="project-card-image"></figure>
+            <div class="project-card-body">
+              <h3 class="project-card-title">Labo GNS3</h3>
+              <p class="project-card-description">Topologie OSPF multi-aire.</p>
+              <ul class="project-tags" role="list">
+                <li class="tag">GNS3</li>
+                <li class="tag">OSPF</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <figure class="project-card-image"></figure>
+            <div class="project-card-body">
+              <h3 class="project-card-title">Monitoring réseau</h3>
+              <p class="project-card-description">Tableau de bord Grafana avec alertes SNMP et seuils personnalisés.</p>
+              <ul class="project-tags" role="list">
+                <li class="tag">Grafana</li>
+                <li class="tag">SNMP</li>
+                <li class="tag">Linux</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <figure class="project-card-image"></figure>
+            <div class="project-card-body">
+              <h3 class="project-card-title">VPN Site-à-Site</h3>
+              <p class="project-card-description">Tunnel IPsec entre deux agences avec routage dynamique.</p>
+              <ul class="project-tags" role="list">
+                <li class="tag">IPsec</li>
+                <li class="tag">VPN</li>
+                <li class="tag">Cisco</li>
+              </ul>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -273,7 +337,6 @@
   </footer>
 
   <script src="assets/js/theme.js"></script>
-  <script src="projects/loader.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>

@@ -16,14 +16,14 @@ const PROJECT_SLUGS = [
 // Cartes de démonstration affichées si aucun projet n'est configuré
 const DEMO_CARDS = [
   {
-    title: 'Infrastructure VLAN',
-    description: 'Segmentation réseau multi-site avec routage inter-VLAN et STP.',
-    tags: ['Cisco', 'VLAN', 'STP'],
-    gradient: 'linear-gradient(135deg, #1a0533 0%, #5b21b6 100%)',
+    title: 'Socket Jump',
+    description: "Jeux fait sur Godot engine dans le cadre d'un projet universitaire",
+    tags: ['Jeux', 'GDscript'],
+    image: 'assets/img/Socket_Jump.png',
   },
   {
-    title: 'Script DHCP Python',
-    description: 'Automatisation de la gestion des baux DHCP.',
+    title: 'F1 Tracker',
+    description: 'Suivie en temps réel des courses de F1 incluant toutes les données pertinentes',
     tags: ['Python', 'DHCP'],
     gradient: 'linear-gradient(135deg, #0a0a14 0%, #3730a3 100%)',
   },
@@ -48,8 +48,16 @@ const DEMO_CARDS = [
 ];
 
 function buildCard(p, isDemo = false) {
-  const card = document.createElement('article');
+  const tag = p.link ? 'a' : 'article';
+  const card = document.createElement(tag);
   card.className = 'project-card' + (isDemo ? '' : ' reveal');
+
+  if (p.link) {
+    card.href = p.link;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.setAttribute('aria-label', `Voir ${p.title}`);
+  }
 
   const imageHTML = p.image
     ? `<figure class="project-card-image">
@@ -63,18 +71,12 @@ function buildCard(p, isDemo = false) {
        </ul>`
     : '';
 
-  const linkHTML = p.link
-    ? `<a href="${p.link}" class="project-card-link" target="_blank" rel="noopener noreferrer"
-          aria-label="Voir ${p.title} sur GitHub">Voir le projet →</a>`
-    : '';
-
   card.innerHTML = `
     ${imageHTML}
     <div class="project-card-body">
       <h3 class="project-card-title">${p.title}</h3>
       <p class="project-card-description">${p.description}</p>
       ${tagsHTML}
-      ${linkHTML}
     </div>`;
 
   return card;
