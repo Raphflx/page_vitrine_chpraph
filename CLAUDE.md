@@ -78,7 +78,6 @@ No JS scroll observers. Use CSS `@keyframes` with `animation-timeline: view()` (
 
 - HTML must be semantic: `<section>`, `<article>`, `<nav>`, `<main>`, `<header>`, `<footer>`
 - Mobile-first responsive; breakpoints: 480 px / 768 px / 1200 px
-- **No JavaScript** — every interactive feature must be solved with HTML + CSS only
 - All images need `alt` text; focus states must be visible
 - 2-space indentation
 - Images in `.webp` format
