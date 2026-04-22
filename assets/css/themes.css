@@ -1,6 +1,27 @@
 /* themes.css — Variables CSS pour les deux thèmes */
 
 :root {
+  /* Thème sombre — défaut */
+  --bg:              #08080D;
+  --bg-secondary:    #0D0C16;
+  --surface:         #100F1C;
+  --surface-raised:  #17162A;
+  --text:            #EAE8FF;
+  --text-muted:      #7A7A9A;
+  --accent:          #8B5CF6;
+  --accent-hover:    #A07AF9;
+  --accent-rgb:      139, 92, 246;
+  --accent-secondary:#F59E0B;
+  --amber:           #F59E0B;
+  --amber-muted:     rgba(245, 158, 11, 0.1);
+  --border:          #18172C;
+  --border-strong:   #26244A;
+  --shadow:          rgba(0, 0, 0, 0.45);
+  --shadow-strong:   rgba(0, 0, 0, 0.7);
+  --header-scrolled-bg: rgba(8, 8, 13, 0.82);
+}
+
+html:has(#theme-toggle:checked) {
   /* Thème clair */
   --bg:              #F5F3FF;
   --bg-secondary:    #EDE9FF;
@@ -18,24 +39,5 @@
   --border-strong:   #C9B8F0;
   --shadow:          rgba(26, 10, 46, 0.08);
   --shadow-strong:   rgba(26, 10, 46, 0.18);
-}
-
-[data-theme="dark"] {
-  /* Thème sombre — noir & violet */
-  --bg:              #08080D;
-  --bg-secondary:    #0D0C16;
-  --surface:         #100F1C;
-  --surface-raised:  #17162A;
-  --text:            #EAE8FF;
-  --text-muted:      #7A7A9A;
-  --accent:          #8B5CF6;
-  --accent-hover:    #A07AF9;
-  --accent-rgb:      139, 92, 246;
-  --accent-secondary:#F59E0B;
-  --amber:           #F59E0B;
-  --amber-muted:     rgba(245, 158, 11, 0.1);
-  --border:          #18172C;
-  --border-strong:   #26244A;
-  --shadow:          rgba(0, 0, 0, 0.45);
-  --shadow-strong:   rgba(0, 0, 0, 0.7);
+  --header-scrolled-bg: rgba(245, 243, 255, 0.85);
 }
