@@ -19,3 +19,12 @@ desktop.ini
 # Claude Code
 .claude/
 CLAUDE.local.md
+
+
+# Godot Engine
+
+*.import
+*.exe
+*.pck
+*.apk
+export/
