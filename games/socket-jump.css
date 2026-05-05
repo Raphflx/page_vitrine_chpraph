@@ -1,0 +1,279 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* ── Layout ── */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Header ── */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 1.25rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-strong);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+  transition: color 0.2s;
+  z-index: 1;
+}
+.back-btn:hover,
+.back-btn:focus-visible { color: var(--accent); }
+.back-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.back-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.game-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1;
+}
+
+.game-tags {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  background: rgba(var(--accent-rgb), 0.18);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  color: var(--accent-hover);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.fullscreen-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.fullscreen-btn:hover { color: var(--accent); border-color: var(--accent); }
+.fullscreen-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.fullscreen-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── Canvas area ── */
+.canvas-area {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: #000;
+}
+
+#canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+/* ── Loader overlay ── */
+#loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--bg);
+  z-index: 20;
+  transition: opacity 0.5s ease;
+}
+#loader.fade-out { opacity: 0; pointer-events: none; }
+
+.loader-ring {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.loader-ring svg {
+  width: 64px;
+  height: 64px;
+  transform: rotate(-90deg);
+}
+.loader-ring .track {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 4;
+}
+.loader-ring .fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 163; /* 2π × r26 ≈ 163 */
+  stroke-dashoffset: 163;
+  transition: stroke-dashoffset 0.3s ease;
+}
+.loader-ring.indeterminate .fill {
+  animation: arc-spin 1.2s linear infinite;
+  stroke-dashoffset: 40;
+}
+@keyframes arc-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.loader-ring.indeterminate svg {
+  transform-origin: center;
+  animation: ring-rotate 1.4s linear infinite;
+}
+@keyframes ring-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.loader-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.loader-name {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.loader-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+/* ── Barre de progression ── */
+.progress-track {
+  width: 220px;
+  height: 3px;
+  background: var(--border-strong);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  border-radius: 99px;
+  transition: width 0.25s ease;
+}
+
+/* ── État d'erreur ── */
+#error-state {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--bg);
+  z-index: 20;
+  padding: 2rem;
+  text-align: center;
+}
+#error-state.visible { display: flex; }
+
+.error-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  font-size: 1.3rem;
+}
+
+.error-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.error-msg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  max-width: 440px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.btn-back-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-back-lg:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .loader-ring.indeterminate .fill,
+  .loader-ring.indeterminate svg { animation: none; }
+  #loader { transition: none; }
+  .progress-fill { transition: none; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .game-title { font-size: 0.8rem; }
+  .game-tags  { display: none; }
+}
