@@ -108,8 +108,8 @@ engineScript.addEventListener('load', () => {
     setProgress(100);
     setTimeout(hideLoader, 350);
   })
-  .catch((err) => {
-    showError(String(err.message || err));
+  .catch(() => {
+    showError('Une erreur est survenue lors du démarrage du jeu. Essaie de recharger la page.');
   });
 });
 

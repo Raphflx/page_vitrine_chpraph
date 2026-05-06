@@ -6,6 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal portfolio site for a Networking & Telecommunications student. Vanilla HTML/CSS/JS — no framework, no build step. Open `index.html` directly in a browser to run it.
 
+
 ## Architecture
 
 Single-page site. Key files:
@@ -67,7 +68,7 @@ burger.addEventListener('click', () => nav.classList.toggle('is-open'));
 
 ## Adding a project
 
-Add a new `<article class="project-card">` block directly in `index.html` inside `#projectsGrid`. No loader script, no JSON files.
+Add a new `<article class="project-card">` block directly in `index.html` inside `#projectsGrid`. No loader script, no JSON files — static HTML is sufficient and preferable for SEO and performance.
 
 ```html
 <article class="project-card">
