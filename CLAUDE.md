@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Personal portfolio site for a Networking & Telecommunications student. Vanilla HTML/CSS only — no JavaScript whatsoever. Open `index.html` directly in a browser to run it.
+Personal portfolio site for a Networking & Telecommunications student. Vanilla HTML/CSS/JS — no framework, no build step. Open `index.html` directly in a browser to run it.
 
 ## Architecture
 
@@ -12,31 +12,58 @@ Single-page site. Key files:
 - `index.html` — the only HTML page; all sections live here
 - `assets/css/themes.css` — CSS custom properties for every color (both themes)
 - `assets/css/style.css` — layout and component styles that consume `themes.css` variables
+- `assets/js/main.js` — all JavaScript interactions (theme toggle, nav menu, animations…)
 
-No JavaScript files. No build step. No dependencies.
+No framework. No build step. No dependencies.
 
 ## Theme switching
 
-Theme is controlled entirely with CSS using the `:has()` selector and a hidden checkbox input:
+Theme is controlled via a `data-theme` attribute on `<body>`, toggled by JavaScript. The chosen theme is persisted in `localStorage` so it survives page reloads.
 
 ```html
-<!-- In index.html, at the very top of <body> -->
-<input type="checkbox" id="theme-toggle" class="theme-checkbox" aria-label="Basculer le thème clair / sombre">
+<!-- In index.html -->
+<button id="theme-toggle" aria-label="Basculer le thème clair / sombre">...</button>
+```
 
-<!-- Toggle button anywhere in the page -->
-<label for="theme-toggle" class="theme-label" aria-hidden="true">...</label>
+```js
+// In assets/js/main.js
+const toggle = document.getElementById('theme-toggle');
+const stored = localStorage.getItem('theme') ?? 'light';
+document.body.dataset.theme = stored;
+
+toggle.addEventListener('click', () => {
+  const next = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.body.dataset.theme = next;
+  localStorage.setItem('theme', next);
+});
 ```
 
 ```css
 /* In themes.css */
-:root { /* light mode variables */ }
-
-.theme-checkbox:checked ~ * { /* or body when checkbox is sibling */
-  /* dark mode variables override */
-}
+:root, [data-theme="light"] { /* light mode variables */ }
+[data-theme="dark"] { /* dark mode variables */ }
 ```
 
-The `data-theme` attribute approach from the previous version is **not used** — it required JS. The checkbox trick is pure CSS.
+To avoid a flash of wrong theme (FOUC), add an inline `<script>` in `<head>` — **before** any CSS — that reads `localStorage` and sets `data-theme` immediately:
+
+```html
+<head>
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem('theme') ?? 'light';
+  </script>
+  <!-- stylesheets here -->
+</head>
+```
+
+## Mobile nav menu
+
+Controlled via JS by toggling a CSS class:
+
+```js
+const burger = document.getElementById('burger');
+const nav = document.getElementById('main-nav');
+burger.addEventListener('click', () => nav.classList.toggle('is-open'));
+```
 
 ## Adding a project
 
@@ -62,14 +89,31 @@ If the project links somewhere, wrap the `<article>` in an `<a>` with `target="_
 
 ## Animations / scroll effects
 
-No JS scroll observers. Use CSS `@keyframes` with `animation-timeline: view()` (scroll-driven animations) or `animation-delay` with `animation-fill-mode: both` for entrance effects on load. Fallback gracefully for browsers that don't support scroll-driven animations.
+Prefer `IntersectionObserver` for scroll-driven entrance animations — better browser support than `animation-timeline: view()` and easier to control.
+
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('is-visible');
+      observer.unobserve(el.target); // animate once
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+```
 
 ```css
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
-    animation: fade-up 0.5s ease both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
   }
 }
 ```
@@ -82,20 +126,20 @@ No JS scroll observers. Use CSS `@keyframes` with `animation-timeline: view()` (
 - 2-space indentation
 - Images in `.webp` format
 - All color values through CSS variables in `themes.css`, never hard-coded
-- Use `<a>` for navigation/links, `<button>` equivalent via `<label>` for toggle controls
-- `loading="lazy"` on all images below the fold
+- JS files go in `assets/js/` — one file per concern, loaded with `defer`
+- No JS frameworks, no bundler — plain ES modules if needed
 
-## CSS-only interaction patterns
+## Interaction patterns
 
-| Feature | CSS approach |
+| Feature | Approach |
 |---|---|
-| Dark/light toggle | Hidden `<input type="checkbox">` + `<label>` + `:checked` sibling selector |
-| Mobile nav menu | Hidden `<input type="checkbox">` + `:checked ~ nav` |
-| Accordion / FAQ | `<details>` / `<summary>` elements |
-| Tabs | Hidden radio inputs + `:checked` + adjacent sibling selectors |
-| Tooltips | `:hover` / `:focus-visible` + `::after` pseudo-element |
+| Dark/light toggle | JS `data-theme` on `<body>` + `localStorage` |
+| Mobile nav menu | JS `.classList.toggle('is-open')` |
+| Accordion / FAQ | `<details>` / `<summary>` (CSS-native, no JS needed) |
+| Tabs | JS + `aria-selected` for accessibility |
+| Tooltips | CSS `:hover` / `:focus-visible` + `::after` pseudo-element |
 | Smooth scroll | `scroll-behavior: smooth` on `html` |
-| Scroll animations | `animation-timeline: view()` (scroll-driven) |
+| Scroll animations | `IntersectionObserver` |
 
 ## Validation
 
