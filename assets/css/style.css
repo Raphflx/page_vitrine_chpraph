@@ -669,12 +669,6 @@ html:has(#theme-toggle:checked) .project-card::after {
   flex-shrink: 0;
 }
 
-/* Texte email inversé dans le HTML, affiché dans le bon sens via RTL */
-.email-obf {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-}
-
 /* =========================================
    FOOTER
    ========================================= */
