@@ -460,13 +460,6 @@ html:has(#theme-toggle:checked) .project-card::after {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.65);
   line-height: 1.5;
-  display: none;
-}
-
-.project-card:nth-child(1) .project-card-description,
-.project-card:nth-child(4) .project-card-description,
-.project-card:nth-child(5) .project-card-description {
-  display: block;
 }
 
 .project-tags {
